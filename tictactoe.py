@@ -53,7 +53,7 @@ def main():
     n = 3
     print(f"Welcome to Charity's fabulous tic-tac-toe!")
     position_map = [[f"{i + 1}" for i in range(n * j, n * (j + 1))] for j in range(n)]
-    print(f"Check out the position map you will use to select your moves: ")
+    print(f"\nCheck out the position map that you will use to select your moves: ")
     print_board(position_map, n)
 
     while True:
@@ -72,18 +72,19 @@ def main():
             # update the board and show to players
             if current_player == 1: board[row][column] = "X"
             if current_player == 2: board[row][column] = "O"
+            # how do I add an undo feature? like when your mom steals you move :)
 
-            print(f"Nice move! Here is the current board: ")
+            print(f"\nNice move! Here is the current board: ")
             print_board(board, n)
 
             win = win_detector(board, n)
 
             if win == "X":
-                print(f"Player {current_player} wins! Nicely done.")
+                print(f"\nPlayer {current_player} wins! Nicely done.")
                 turn = n**2 - 1
 
             if win == "O":
-                print(f"Player {current_player} wins! Nicely done.")
+                print(f"\nPlayer {current_player} wins! Nicely done.")
                 turn = n**2 - 1
 
             turn = turn + 1

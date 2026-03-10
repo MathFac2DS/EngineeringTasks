@@ -1,0 +1,30 @@
+## Q1. Given n, k, find the kth permutation of the first n natural numbers
+
+import itertools
+from itertools import permutations, islice
+
+class Solution(object):
+    def getPermutation(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: str
+        """
+
+        # find in which of the n groups the kth element appears
+        if k <= math.factorial(n-1): group = 1
+        elif k % math.factorial(n-1) == 0: group = k / math.factorial(n - 1)
+        else: group = int(k / math.factorial(n-1)) + 1
+        position_in_group = k - (group - 1)*math.factorial(n - 1)
+
+        # generate a list of the first n natural numbers
+        list_natural = [i+1 for i in range(n)]
+        permutes = islice(permutations(list_natural), (group-1)*math.factorial(n-1), group*math.factorial(n-1))
+        list_permutes = []
+
+        for p in permutes:
+            string = ''.join(str(item) for item in p)
+            list_permutes.append(string)
+
+
+        return list_permutes[position_in_group-1]
