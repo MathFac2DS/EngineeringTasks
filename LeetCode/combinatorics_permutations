@@ -28,3 +28,22 @@ class Solution(object):
 
 
         return list_permutes[position_in_group-1]
+
+## Q2. given numRows, print first numRows of Pascal's Triangle
+class Solution(object):
+    def generate(self, numRows):
+        """
+        :type numRows: int
+        :rtype: List[List[int]]
+        """
+        # binomial expansion -> n_C_k in row n, column k for 1 <= k <= n
+        # n_C_k = n! / (k!*(n-k)!)
+
+        triangle = []
+        n = numRows
+
+        for j in range(0, n):
+            current_row = [math.factorial(j) / (math.factorial(k)*math.factorial(j - k)) for k in range(0, j+1)]
+            triangle.append(current_row)
+
+        return triangle
