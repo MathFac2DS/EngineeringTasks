@@ -46,3 +46,53 @@ class Solution(object):
             fives_count += dividend
 
         return fives_count
+
+
+# Q3. given bounds left and right, find the pair of primes between left and right (inclusive) that are closest together.
+class Solution(object):
+    def closestPrimes(self, left, right):
+        """
+        :type left: int
+        :type right: int
+        :rtype: List[int]
+        """
+        # two and three are the closest primes, when they are in the range
+        if left <= 2 and 3 <= right: return [2, 3]
+
+        # we need at least three elements to see a pair of primes, when two is not in the range
+        if right - left < 3: return [-1, -1]
+
+        # generate an array of natural numbers, starting with left and ending with right
+        range_of_numbers = [k for k in range(left, right + 1)]
+
+        # generate a list of primes less than or equal to the int(sqrt(right))
+        def get_primes(upper):
+            # initialize the sieve
+            is_prime = [True] * (upper + 1)
+            is_prime[0] = is_prime[1] = False
+
+            # separate primes and composites
+            for p in range(2, int(sqrt(upper)) + 1):
+                if is_prime[p] == True:
+                    # mark all multiples of p as prime
+                    for k in range(p * p, upper + 1, p): is_prime[k] = False
+
+            # filter the list of numbers to include only the primes
+            return [i for i, prime_flag in enumerate(is_prime) if prime_flag]
+
+            # primes = []
+            # for i, prime_flag in enumerate(is_prime):
+            #     if prime_flag == True: primes.append(i)
+
+        primes_in_range = [p for p in get_primes(right) if p >= left]
+
+        # compute differences of consecutive primes in range
+        differences = [primes_in_range[k + 1] - primes_in_range[k]
+                       for k, _ in enumerate(primes_in_range)
+                       if k < len(primes_in_range) - 1]
+
+        if not differences: return [-1, -1]
+        min_diff = min(differences)
+        idx = differences.index(min_diff)
+
+        return [primes_in_range[idx], primes_in_range[idx + 1]]
