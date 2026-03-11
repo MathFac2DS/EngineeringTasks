@@ -47,7 +47,6 @@ class Solution(object):
 
         return fives_count
 
-
 # Q3. given bounds left and right, find the pair of primes between left and right (inclusive) that are closest together.
 class Solution(object):
     def closestPrimes(self, left, right):
