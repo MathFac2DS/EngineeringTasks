@@ -46,3 +46,25 @@ class Solution(object):
             fives_count += dividend
 
         return fives_count
+
+#Q3. given bounds left and right, find the pair of primes between left and right (inclusive) that are closest together. 
+class Solution(object):
+    def closestPrimes(self, left, right):
+        """
+        :type left: int
+        :type right: int
+        :rtype: List[int]
+        """
+        # two and three are the closest primes, when they are in the range
+        if left <= 2 and 3 <= right: return [2, 3]
+
+        # we need at least three elements to see a pair of primes, when two is not in the range
+        if right - left < 3: return [-1, -1]
+
+
+        # generate an array of natural numbers, starting with left and ending with right
+        range_of_numbers = [k for k in range(left, right+1)]
+        
+
+        # generate a prime check list, default true
+        is_prime = [True]*len(range_of_numbers)
