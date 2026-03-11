@@ -25,3 +25,24 @@ class Solution(object):
             if is_prime[i]:
                 is_prime[i ** 2:n:i] = [False] * len(range(i ** 2, n, i))
         return sum(is_prime)
+
+# Q2. given an integer n, return the number of trailing zeroes in n!.
+
+class Solution(object):
+    def trailingZeroes(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+
+        # trailing zeros come from products with powers of 10: (2*5)^p
+        # it suffices to show, find the number of factors of 5
+        # test n = 625 => div = 625 > 0 => div = 125, fives_count = 125, repeat
+
+        fives_count = 0
+        dividend = n
+        while dividend >= 5:
+            dividend //= 5
+            fives_count += dividend
+
+        return fives_count
