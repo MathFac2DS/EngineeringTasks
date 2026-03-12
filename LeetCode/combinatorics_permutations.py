@@ -57,20 +57,17 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-
-        if k == 1: return math.factorial(n - 1) % (10**9 + 7)
-        if k == n: return 1
         if k > n or k == 0: return 0
-        stirling = [[1, 0]]
-        # generate the first n rows of the stirling triangle, recursively
-        for row in range(1, n+1):
-            current_row = [0]
-            for column in range(1, row+1):
-                prev_row = stirling[row-1]
-                above = (row-1)*(prev_row[column]) if column < len(prev_row) else 0
-                corner = prev_row[column-1]
-                stirling_number = above + corner
-                current_row.append(stirling_number)
-            current_row.append(0)
-            stirling.append(current_row)
-        return stirling[n][k] % (10**9 + 7)
+        if k == n: return 1
+
+        MOD = (10 ** 9 + 7)
+        stirling_row = [0] * (k + 1)
+        stirling_row[0] = 1
+
+        for i in range(1, n + 1):
+            for j in range(min(i, k), 0, -1):
+                stirling_row[j] = ((i - 1) * stirling_row[j] + stirling_row[j - 1]) % MOD
+            # replace first element with 0, s(i, 0) = 0
+            if i == 1: stirling_row[0] = 0
+
+        return stirling_row[k]
