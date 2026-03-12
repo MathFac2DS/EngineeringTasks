@@ -49,7 +49,7 @@ def generate_pascals(self, numRows):
     return triangle
 
 # left visible: given n, k, generate the Stirling number (of the first kind)
-def stirling_generator(self, n, k):
+def stirling_triangle(self, n, k):
     """
     :type n: int
     :type k: int
@@ -79,3 +79,24 @@ def prime_check(k):
     for j in range(2, upper_bound + 1):
         if k % j == 0: return False
     return True
+
+def stirling_row(self, n, k):
+    """
+    :type n: int
+    :type k: int
+    :rtype: int
+    """
+    if k > n or k == 0: return 0
+    if k == n: return 1
+
+    MOD = (10 ** 9 + 7)
+    stirling_row = [0] * (k + 1)
+    stirling_row[0] = 1
+
+    for i in range(1, n + 1):
+        for j in range(min(i, k), 0, -1):
+            stirling_row[j] = ((i - 1) * stirling_row[j] + stirling_row[j - 1]) % MOD
+        # replace first element with 0, s(i, 0) = 0
+        if i == 1: stirling_row[0] = 0
+
+    return stirling_row[k]
