@@ -59,7 +59,7 @@ class Solution(object):
         if left <= 2 and 3 <= right: return [2, 3]
 
         # we need at least three elements to see a pair of primes, when two is not in the range
-        if right - left < 3: return [-1, -1]
+        if right - left < 2: return [-1, -1]
 
         # generate an array of natural numbers, starting with left and ending with right
         range_of_numbers = [k for k in range(left, right + 1)]
